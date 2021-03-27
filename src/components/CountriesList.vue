@@ -23,7 +23,7 @@
  </div>
  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
   <span v-if="loading">loading...</span>
-  <div v-for="country in searchList" :key="country.id" v-else>
+  <div v-for="country in searchCountries" :key="country.id" v-else>
    <countries-card :country="country" />
   </div>
  </div>
@@ -31,55 +31,55 @@
 
 <script>
 import CountriesCard from "@/components/CountriesCard";
-import { reactive, toRefs, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watchEffect } from "vue";
 
 export default {
  components: { CountriesCard },
  setup() {
-  const state = reactive({
-   search: "",
-   countries: [],
-   loading: false,
-  });
+  const search = ref("");
+  const countries = ref([]);
+  const loading = ref(false);
 
   const fetchCountries = async () => {
    await fetch("https://restcountries.eu/rest/v2/region/africa")
     .then((response) => response.json())
     .then((data) => {
-     if (!state.loading) {
-      state.countries = data;
+     if (!loading.value) {
+      countries.value = data;
      } else {
-      state.loading = false;
+      loading.value = false;
      }
     })
     .catch((err) => {
      console.log(err);
-     state.loading = false;
+     loading.value = false;
     });
   };
 
   onMounted(fetchCountries); // on mounted call 'fetchCountries'
 
-  const searchList = computed(() => {
-   return state.countries.filter((country) => {
-    return country.name.toLowerCase().includes(state.search.toLowerCase());
+  const searchCountries = computed(() => {
+   return countries.value.filter((country) => {
+    return country.name.toLowerCase().includes(search.value.toLowerCase());
    });
   });
 
-  watch(() => {
-   console.log(
-    "We have about " + state.countries.length + " Countries in Africa"
-   );
-  });
-
-  // watchEffect(() => {
-  //  console.log("We have about " + state.countries.length + " Countries in Africa");
+  // watch(() => {
+  //  console.log(
+  //   "We have about " + countries.value.length + " Countries in Africa"
+  //  );
   // });
 
+  watchEffect(() => {
+   console.log("We have about " + countries.value.length + " Countries in Africa");
+  });
+
   return {
-   ...toRefs(state),
+   search,
+   countries,
+   loading,
    fetchCountries,
-   searchList,
+   searchCountries,
   };
  },
 };
