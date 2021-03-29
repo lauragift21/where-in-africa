@@ -7,16 +7,18 @@
   />
   <section class="mx-6 my-6">
    <p class="text-xl font-bold">{{ country.name }} - {{ country.capital }}</p>
-   <button class="font-bold" @click="modalOpen = true">See More...</button>
+   <button class="font-bold" @click="isModalOpen = true">See More...</button>
    <teleport to="#my-modal">
-    <div v-if="modalOpen" id="myModal">
+    <div v-if="isModalOpen" id="myModal">
      <div class="relative popup font-mono shadow-md">
-      <button class="text-3xl absolute right-7 top-2" @click="modalOpen = false">&times;</button>
+      <button
+       class="text-3xl absolute right-7 top-2"
+       @click="isModalOpen = false"
+      >
+       &times;
+      </button>
       <p>Country Name: {{ country.name }}</p>
-      <p>Country Native Name: {{ country.nativename }}</p>
-      <p>Country Population: {{ country.population }}</p>
-      <p>Country SubRegion: {{ country.subregion }}</p>
-      <p>Country Domain: {{ country.topLevelDomain[0] }}</p>
+      <p>Country Native Name: {{ country.nativeName }}</p>
      </div>
     </div>
    </teleport>
@@ -34,7 +36,7 @@ export default {
 
  setup() {
   const state = reactive({
-   modalOpen: false,
+   isModalOpen: false,
   });
 
   return {
