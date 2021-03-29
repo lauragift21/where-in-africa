@@ -21,7 +21,7 @@
    class="pl-10 w-full md:w-2/3 lg:w-1/3 border-2 border-gray-100 py-2 shadow-md"
   />
  </div>
- <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+ <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
   <span v-if="loading">loading...</span>
   <div v-for="country in searchList" :key="country.id" v-else>
    <countries-card :country="country" />

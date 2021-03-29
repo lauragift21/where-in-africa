@@ -7,12 +7,16 @@
   />
   <section class="mx-6 my-6">
    <p class="text-xl font-bold">{{ country.name }} - {{ country.capital }}</p>
+   <button class="font-bold" @click="modalOpen = true">See More...</button>
    <teleport to="#my-modal">
-    <button @click="modalOpen = true">Open full screen modal!</button>
     <div v-if="modalOpen" id="myModal">
-     <div>
-      I'm a modal!
-      <button @click="modalOpen = false">Close</button>
+     <div class="relative popup font-mono shadow-md">
+      <button class="text-3xl absolute right-7 top-2" @click="modalOpen = false">&times;</button>
+      <p>Country Name: {{ country.name }}</p>
+      <p>Country Native Name: {{ country.nativename }}</p>
+      <p>Country Population: {{ country.population }}</p>
+      <p>Country SubRegion: {{ country.subregion }}</p>
+      <p>Country Domain: {{ country.topLevelDomain[0] }}</p>
      </div>
     </div>
    </teleport>
@@ -21,28 +25,34 @@
 </template>
 
 <script>
-// import { reactive } from "vue";
+import { reactive, toRefs } from "vue";
 
 export default {
  props: {
   country: Object,
  },
- data() {
-  return {
+
+ setup() {
+  const state = reactive({
    modalOpen: false,
+  });
+
+  return {
+   ...toRefs(state),
   };
  },
-
- //  setup() {
- //   const state = reactive({
- //    modalOpen: false,
- //   });
-
- //   return {
- //    state,
- //   };
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.popup {
+ font-family: myriad-pro, sans-serif;
+ position: fixed;
+ bottom: 320px;
+ left: 220px;
+ width: 600px;
+ padding: 30px;
+ font-size: 2.1rem;
+ background-color: #fff;
+}
 </style>
