@@ -1,35 +1,46 @@
 <template>
- <div class="border-2 border-white shadow-md rounded-lg">
-  <div>
-   <img
-    :src="country.flag"
-    alt="country flag"
-    class="object-cover h-40 w-full rounded-t-lg"
-   />
-  </div>
-  <div class="mx-6 my-8">
-   <p class="text-2xl font-bold">{{ country.name }}</p>
-   <p class="font-bold text-lg">
-    Population:
-    <span class="font-normal">{{ country.population }}</span>
-   </p>
-   <p class="font-bold text-lg">
-    Languages:
-    <span class="font-normal">{{ country.languages[0].name }}</span>
-   </p>
-   <p class="font-bold text-lg">
-    Capital:
-    <span class="font-normal">{{ country.capital }}</span>
-   </p>
-  </div>
+ <div class="border-2 border-white h-full shadow-md rounded-lg">
+  <img
+   :src="country.flag"
+   alt="country flag"
+   class="object-cover h-40 w-full rounded-t-lg"
+  />
+  <section class="mx-6 my-6">
+   <p class="text-xl font-bold">{{ country.name }} - {{ country.capital }}</p>
+   <teleport to="#my-modal">
+    <button @click="modalOpen = true">Open full screen modal!</button>
+    <div v-if="modalOpen" id="myModal">
+     <div>
+      I'm a modal!
+      <button @click="modalOpen = false">Close</button>
+     </div>
+    </div>
+   </teleport>
+  </section>
  </div>
 </template>
 
 <script>
+// import { reactive } from "vue";
+
 export default {
  props: {
   country: Object,
- }
+ },
+ data() {
+  return {
+   modalOpen: false,
+  };
+ },
+
+ //  setup() {
+ //   const state = reactive({
+ //    modalOpen: false,
+ //   });
+
+ //   return {
+ //    state,
+ //   };
 };
 </script>
 

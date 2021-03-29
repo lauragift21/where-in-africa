@@ -31,7 +31,7 @@
 
 <script>
 import CountriesCard from "@/components/CountriesCard";
-import { reactive, toRefs, onMounted, computed, watch } from "vue";
+import { reactive, toRefs, onMounted, computed, watchEffect } from "vue";
 
 export default {
  components: { CountriesCard },
@@ -66,15 +66,15 @@ export default {
    });
   });
 
-  watch(() => {
-   console.log(
-    "We have about " + state.countries.length + " Countries in Africa"
-   );
-  });
-
-  // watchEffect(() => {
-  //  console.log("We have about " + state.countries.length + " Countries in Africa");
+  // watch(() => {
+  //  console.log(
+  //   "We have about " + state.countries.length + " Countries in Africa"
+  //  );
   // });
+
+  watchEffect(() => {
+   console.log("We have about " + state.countries.length + " Countries in Africa");
+  });
 
   return {
    ...toRefs(state),
