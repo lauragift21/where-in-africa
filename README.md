@@ -1,4 +1,4 @@
-# whereintheworldv3
+# Where In Africa v3
 
 ## Project setup
 ```
@@ -22,4 +22,3 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-# where-in-africa
